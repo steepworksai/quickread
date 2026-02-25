@@ -124,6 +124,7 @@ export default function App() {
         const ytResults = await chrome.scripting.executeScript({
           target: { tabId: tab.id },
           func: extractYouTubeInfoInPage,
+          world: "MAIN", // needs page's JS context to read ytInitialPlayerResponse
         });
         const ytInfo = ytResults[0]?.result;
 

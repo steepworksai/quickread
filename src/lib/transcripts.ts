@@ -16,9 +16,20 @@ export interface TranscriptResult {
 
 // ─── YouTube ─────────────────────────────────────────────────────────────────
 // Runs inside the page via executeScript — must be self-contained, no imports
-export function extractYouTubeInfoInPage(): { captionUrl: string | null; title: string } | null {
+export async function extractYouTubeInfoInPage(): Promise<{ captionUrl: string | null; title: string } | null> {
   try {
-    const player = (window as any).ytInitialPlayerResponse;
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    // ytInitialPlayerResponse may not be set yet if the extension opens before
+    // the page JS has fully executed. Poll for up to 4 seconds.
+    let player = (window as any).ytInitialPlayerResponse;
+    if (!player) {
+      for (let attempt = 0; attempt < 8; attempt++) {
+        await sleep(500);
+        player = (window as any).ytInitialPlayerResponse;
+        if (player) break;
+      }
+    }
     if (!player) return null;
 
     const title: string = player?.videoDetails?.title ?? "YouTube Video";
