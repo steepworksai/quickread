@@ -62,23 +62,35 @@ export async function fetchYouTubeTranscript(captionUrl: string): Promise<string
 
 // ─── DeepLearning.AI ──────────────────────────────────────────────────────────
 // Runs inside the page via executeScript — must be self-contained, no imports
-export function extractDeepLearningTranscriptInPage(): { title: string; transcript: string } | null {
+export async function extractDeepLearningTranscriptInPage(): Promise<{ title: string; transcript: string } | null> {
   try {
-    // Title: try multiple common selectors
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    // Title
     const titleEl =
       document.querySelector("h1") ??
       document.querySelector("[class*='title']") ??
       document.querySelector("title");
     const title = titleEl?.textContent?.trim() ?? "DeepLearning.AI Video";
 
-    // Transcript: try selectors specific to the platform's transcript panel
+    // ── Step 1: click "Show Transcript" if present ───────────────────────────
+    const allButtons = Array.from(document.querySelectorAll("button"));
+    const showBtn = allButtons.find(
+      (b) => /show\s+transcript/i.test(b.textContent ?? "")
+    );
+    if (showBtn) {
+      (showBtn as HTMLButtonElement).click();
+      await sleep(1200); // wait for panel to animate open
+    }
+
+    // ── Step 2: extract transcript text ─────────────────────────────────────
     const transcriptSelectors = [
       "[class*='transcript']",
+      "[class*='Transcript']",
       "[data-purpose*='transcript']",
       ".phrase-text",
       "[class*='subtitle']",
       "[class*='caption']",
-      "[class*='Transcript']",
     ];
 
     for (const sel of transcriptSelectors) {
@@ -89,21 +101,25 @@ export function extractDeepLearningTranscriptInPage(): { title: string; transcri
       }
     }
 
-    // Fallback: extract main article/content area text (skip nav/header/footer)
+    // ── Step 3: fallback to main content area ────────────────────────────────
     const noiseTags = new Set(["script","style","noscript","nav","header","footer","button","aside"]);
     const container =
-      document.querySelector("[class*='content']") ??
       document.querySelector("main") ??
       document.querySelector("article") ??
+      document.querySelector("[class*='content']") ??
+      document.querySelector("[class*='lesson']") ??
       document.body;
 
     const clone = container!.cloneNode(true) as Element;
     for (const el of Array.from(clone.querySelectorAll("*"))) {
       if (noiseTags.has(el.tagName.toLowerCase())) el.remove();
     }
-
     const text = (clone.textContent ?? "").replace(/\s+/g, " ").trim();
-    return text.split(/\s+/).length > 20 ? { title, transcript: text } : null;
+    if (text.split(/\s+/).length > 20) return { title, transcript: text };
+
+    // ── Last resort ───────────────────────────────────────────────────────────
+    const bodyText = (document.body.textContent ?? "").replace(/\s+/g, " ").trim();
+    return bodyText.length > 50 ? { title, transcript: bodyText } : null;
   } catch {
     return null;
   }

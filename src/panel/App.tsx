@@ -142,11 +142,23 @@ export default function App() {
         });
         const dlInfo = dlResults[0]?.result;
 
-        if (!dlInfo) throw new Error("Could not extract transcript from this DeepLearning.AI page.");
-
-        videoTitle = dlInfo.title;
-        text = dlInfo.transcript;
-        await logger.info("panel", `DeepLearning.AI: extracted transcript for "${videoTitle}"`);
+        if (dlInfo) {
+          videoTitle = dlInfo.title;
+          text = dlInfo.transcript;
+          await logger.info("panel", `DeepLearning.AI: extracted transcript for "${videoTitle}"`);
+        } else {
+          // Transcript panel not visible or selectors missed — fall back to generic page text
+          await logger.warn("panel", "DeepLearning.AI transcript extraction returned null; falling back to generic page text");
+          const fallbackResults = await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            func: extractPageTextInPage,
+          });
+          text = fallbackResults[0]?.result ?? "";
+          if (!text || text.split(/\s+/).length < 20) {
+            throw new Error("Could not extract content from this DeepLearning.AI page. Try opening the transcript panel first.");
+          }
+          await logger.info("panel", `DeepLearning.AI: using generic page text (${text.split(/\s+/).length} words)`);
+        }
 
       // ── Regular web page ─────────────────────────────────────────────────────
       } else {
