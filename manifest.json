@@ -3,6 +3,7 @@
   "name": "Briefer",
   "description": "Instantly summarize articles, YouTube videos, Coursera & DeepLearning.AI courses — TLDR, key points, AI sketchnote.",
   "version": "1.0.0",
+  "homepage_url": "https://briefer.steepworksai.com/",
   "permissions": ["activeTab", "storage", "scripting", "sidePanel", "tabs", "windows"],
   "host_permissions": ["<all_urls>", "https://generativelanguage.googleapis.com/"],
   "action": {

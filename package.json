@@ -2,6 +2,7 @@
   "name": "briefer",
   "version": "1.0.0",
   "description": "Instantly summarize articles, YouTube videos, Coursera & DeepLearning.AI courses — TLDR, key points, AI sketchnote.",
+  "homepage": "https://briefer.steepworksai.com/",
   "author": "SteepWorksAi",
   "license": "MIT",
   "private": true,

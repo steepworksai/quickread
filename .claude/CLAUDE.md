@@ -80,4 +80,4 @@ These were removed and should NOT be re-added:
 - `docs/privacy.html` — privacy policy
 - `docs/icon128.png` — extension icon
 - Publish: repo Settings → Pages → Source → `docs/` on `main`
-- Live at: `https://steepworksai.github.io/Briefer/`
+- Live at: `https://briefer.steepworksai.com/`
