@@ -3,9 +3,10 @@
 ## Project Identity
 - **App name**: Briefer
 - **Company**: SteepWorksAi
-- **Repo**: `steepworksai/Briefer`
+- **Repo**: `steepworksai/briefer` (lowercase — renamed Feb 2026)
 - **License**: MIT © 2026 SteepWorksAi
 - **Version**: 1.0.0
+- **Homepage**: `https://briefer.steepworksai.com/`
 
 ## Tech Stack
 - Chrome MV3 extension — side panel (not popup)
@@ -22,7 +23,7 @@
 - `src/panel/components/Summary.tsx` — renders summary result
 - `src/panel/components/DoodleMindMap.tsx` — Rough.js interactive mind map
 - `src/panel/components/History.tsx` — per-topic grouped history view
-- `src/panel/components/Tour.tsx` — first-launch onboarding tour
+- `src/panel/components/Tour.tsx` — first-launch onboarding tour (3 slides)
 - `src/panel/components/TokenSetup.tsx` — Gemini API key setup UI
 - `src/background/index.ts` — service worker, message routing
 - `src/lib/logger.ts` — logs to chrome.storage.local + localhost:3747
@@ -62,8 +63,13 @@ Common victims: `photosynthesis`, `backpropagation`, `mitochondria`, domain-spec
 - Topic editable inline per entry (📁 button)
 
 ## Onboarding Tour
-- 5 slides: Welcome → Summary modes → AI Doodle → History → API key
+- **3 slides**: Welcome → Builds your knowledge base → Private by design
 - Shown once on first launch, gated by `tourSeen` in `chrome.storage.sync`
+- Last slide (Private by design): body is `string[]` — renders as `<ul>` with emoji bullets
+  - `🔑` item: API key setup instruction
+  - `🔒` item: privacy/no tracking assurance
+  - Slide icon: `🔐`
+- `done()` uses callback: `chrome.storage.sync.set({ tourSeen: true }, () => onDone())`
 - To reset tour for testing: `chrome.storage.sync.remove("tourSeen")` in DevTools console
 
 ## Dead Code Removed
@@ -75,9 +81,32 @@ These were removed and should NOT be re-added:
 - `elevenlabs.ts`, `inworld.ts` — TTS provider libs
 - `followUp()` in api.ts + `FOLLOW_UP` handler in background
 
-## Docs (GitHub Pages)
+## Manifest
+- `host_permissions`: `<all_urls>` + `https://generativelanguage.googleapis.com/` ONLY
+- Dead permissions removed: `elevenlabs.io`, `inworld.ai`, `localhost:3747`
+- `homepage_url`: `https://briefer.steepworksai.com/`
+- Description: "Instantly summarize articles, YouTube videos, Coursera & DeepLearning.AI courses — TLDR, key points, AI sketchnote."
+
+## Docs (GitHub Pages + Custom Domain)
 - `docs/index.html` — landing page
 - `docs/privacy.html` — privacy policy
 - `docs/icon128.png` — extension icon
+- `docs/CNAME` — `briefer.steepworksai.com`
 - Publish: repo Settings → Pages → Source → `docs/` on `main`
+- DNS: CNAME record `briefer` → `steepworksai.github.io` (add in domain registrar)
 - Live at: `https://briefer.steepworksai.com/`
+
+## Chrome / Edge Store Submission
+- `briefer-1.0.0.zip` — 103 KB, built and ready in repo root
+- Promo images in `store-assets/`: 440×280, 920×680, 1400×560
+- Privacy policy URL: `https://briefer.steepworksai.com/privacy.html`
+- Category: Productivity
+- Chrome store: https://chrome.google.com/webstore/devconsole
+- Edge store: https://partner.microsoft.com/en-us/dashboard/microsoftedge/overview
+- **Still needed**: 1–5 screenshots at 1280×800 (take manually in Chrome)
+
+## Store Listing Copy
+**Short description (116 chars):**
+Instantly summarize articles, YouTube videos, Coursera & DeepLearning.AI courses — TLDR, key points, AI sketchnote.
+
+**Full description:** See session history or docs/index.html for full copy.

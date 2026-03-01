@@ -17,7 +17,13 @@
     .logo-wrap span { font-size: 28px; font-weight: 900; color: #1f2937; letter-spacing: -0.5px; }
     .badge { display: inline-block; background: #ede9fe; color: #6366f1; border: 1px solid #c4b5fd; border-radius: 99px; padding: 4px 14px; font-size: 13px; font-weight: 700; margin-bottom: 20px; }
     h1 { font-size: 42px; font-weight: 900; color: #1f2937; line-height: 1.15; margin-bottom: 16px; }
-    .sub { font-size: 18px; color: #6b7280; line-height: 1.6; max-width: 540px; margin: 0 auto; }
+    .sub { font-size: 18px; color: #6b7280; line-height: 1.6; max-width: 540px; margin: 0 auto 36px; }
+
+    /* ── CTAs ── */
+    .cta-group { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border-radius: 12px; font-weight: 700; font-size: 16px; text-decoration: none; box-shadow: 0 4px 18px rgba(99,102,241,0.35); }
+    .cta-gh { background: linear-gradient(135deg, #1f2937, #374151); box-shadow: 0 4px 18px rgba(0,0,0,0.2); }
+    .cta-contribute { background: transparent; border: 2px solid #6366f1; color: #6366f1; box-shadow: none; }
 
     /* ── Features ── */
     .features { max-width: 720px; margin: 60px auto 0; padding: 0 24px; }
@@ -28,21 +34,17 @@
     .feature p { font-size: 13px; color: #6b7280; line-height: 1.55; }
     .icon { font-size: 24px; margin-bottom: 10px; }
 
-    /* ── CTA ── */
-    .cta-section { max-width: 720px; margin: 60px auto; padding: 0 24px; display: flex; justify-content: center; }
-    .cta-group { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-    .cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border-radius: 12px; font-weight: 700; font-size: 16px; text-decoration: none; box-shadow: 0 4px 18px rgba(99,102,241,0.35); }
-    .cta-gh { background: linear-gradient(135deg, #1f2937, #374151); box-shadow: 0 4px 18px rgba(0,0,0,0.2); }
-    .cta-contribute { background: transparent; border: 2px solid #6366f1; color: #6366f1; box-shadow: none; }
-
     /* ── How it works ── */
-    .how { max-width: 720px; margin: 0 auto 60px; padding: 0 24px; text-align: center; }
+    .how { max-width: 720px; margin: 60px auto 0; padding: 0 24px; text-align: center; }
     .how h2 { font-size: 26px; font-weight: 800; color: #1f2937; margin-bottom: 32px; }
     .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
     .step { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px 20px; text-align: left; }
     .step-num { font-size: 12px; font-weight: 700; color: #6366f1; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px; }
     .step h3 { font-size: 15px; font-weight: 700; color: #1f2937; margin-bottom: 6px; }
     .step p { font-size: 13px; color: #6b7280; line-height: 1.55; }
+
+    /* ── Bottom CTA ── */
+    .cta-bottom { max-width: 720px; margin: 60px auto; padding: 0 24px; display: flex; justify-content: center; }
 
     /* ── Privacy ── */
     .privacy { max-width: 720px; margin: 0 auto 60px; padding: 0 24px; }
@@ -65,7 +67,7 @@
 </head>
 <body>
 
-  <!-- Hero -->
+  <!-- Hero + CTAs -->
   <div class="hero">
     <div class="logo-wrap">
       <img src="icon128.png" alt="Briefer logo" />
@@ -74,6 +76,17 @@
     <div class="badge">Chrome Extension · Free · Open Source · Powered by Gemini AI</div>
     <h1>Understand any page<br>in seconds</h1>
     <p class="sub">Briefer reads any article, blog post, or YouTube video and generates a structured AI summary — TLDR, key points, and takeaway — instantly in your browser's side panel.</p>
+    <div class="cta-group">
+      <a class="cta" href="https://github.com/steepworksai/Briefer" target="_blank">
+        ➕ Get Briefer — It's Free
+      </a>
+      <a class="cta cta-gh" href="https://github.com/steepworksai/Briefer" target="_blank">
+        ⭐ Star on GitHub
+      </a>
+      <a class="cta cta-contribute" href="https://github.com/steepworksai/Briefer" target="_blank">
+        🤝 Contribute
+      </a>
+    </div>
   </div>
 
   <!-- Features -->
@@ -113,21 +126,6 @@
     </div>
   </div>
 
-  <!-- CTAs -->
-  <div class="cta-section">
-    <div class="cta-group">
-      <a class="cta" href="https://github.com/steepworksai/Briefer" target="_blank">
-        ➕ Get Briefer — It's Free
-      </a>
-      <a class="cta cta-gh" href="https://github.com/steepworksai/Briefer" target="_blank">
-        ⭐ Star on GitHub
-      </a>
-      <a class="cta cta-contribute" href="https://github.com/steepworksai/Briefer" target="_blank">
-        🤝 Contribute
-      </a>
-    </div>
-  </div>
-
   <!-- How it works -->
   <div class="how">
     <h2>How it works</h2>
@@ -152,6 +150,21 @@
         <h3>Browse your history</h3>
         <p>Every summary is saved automatically and grouped by topic — your personal knowledge base.</p>
       </div>
+    </div>
+  </div>
+
+  <!-- Bottom CTA -->
+  <div class="cta-bottom">
+    <div class="cta-group">
+      <a class="cta" href="https://github.com/steepworksai/Briefer" target="_blank">
+        ➕ Get Briefer — It's Free
+      </a>
+      <a class="cta cta-gh" href="https://github.com/steepworksai/Briefer" target="_blank">
+        ⭐ Star on GitHub
+      </a>
+      <a class="cta cta-contribute" href="https://github.com/steepworksai/Briefer" target="_blank">
+        🤝 Contribute
+      </a>
     </div>
   </div>
 
