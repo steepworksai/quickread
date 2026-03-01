@@ -100,6 +100,35 @@
         🤝 Contribute
       </a>
     </div>
+    <button class="video-modal-btn" onclick="openVideoModal()">
+      <svg viewBox="0 0 24 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23.495 2.658A3.018 3.018 0 0 0 21.373.522C19.505 0 12 0 12 0S4.495 0 2.627.522A3.018 3.018 0 0 0 .505 2.658 31.747 31.747 0 0 0 0 8.5a31.747 31.747 0 0 0 .505 5.842 3.018 3.018 0 0 0 2.122 2.136C4.495 17 12 17 12 17s7.505 0 9.373-.522a3.018 3.018 0 0 0 2.122-2.136A31.747 31.747 0 0 0 24 8.5a31.747 31.747 0 0 0-.505-5.842z" fill="currentColor"/>
+        <path d="M9.545 12.068L15.818 8.5 9.545 4.932v7.136z" fill="#fff"/>
+      </svg>
+      Watch Demo
+    </button>
+
+    <!-- Video modal — replace VIDEO_ID_HERE with the YouTube video ID -->
+    <div class="video-modal-overlay" id="videoModal" onclick="closeVideoModal()">
+      <div class="video-modal" onclick="event.stopPropagation()">
+        <button class="video-modal-close" onclick="closeVideoModal()">✕</button>
+        <div class="video-wrap"></div>
+      </div>
+    </div>
+    <script>
+      function openVideoModal() {
+        document.getElementById('videoModal').querySelector('.video-wrap').innerHTML =
+          '<iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE?autoplay=1" allowfullscreen allow="autoplay"></iframe>';
+        document.getElementById('videoModal').classList.add('open');
+      }
+      function closeVideoModal() {
+        document.getElementById('videoModal').classList.remove('open');
+        document.getElementById('videoModal').querySelector('.video-wrap').innerHTML = '';
+      }
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeVideoModal();
+      });
+    </script>
   </div><!-- /.hero -->
 
   <!-- Right: How it works (full steps) -->
