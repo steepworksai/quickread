@@ -17,6 +17,13 @@ export function TokenSetup({ onSaved }: TokenSetupProps) {
     }
     setSaving(true);
     await chrome.storage.sync.set({ geminiApiKey: trimmed });
+
+    // Close the AI Studio tab if the user opened it to get their key
+    const tabs = await chrome.tabs.query({ url: "https://aistudio.google.com/*" });
+    for (const tab of tabs) {
+      if (tab.id != null) chrome.tabs.remove(tab.id);
+    }
+
     setSaving(false);
     onSaved();
   }
